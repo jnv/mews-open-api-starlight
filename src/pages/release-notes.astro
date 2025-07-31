@@ -1,0 +1,249 @@
+---
+import { getCollection } from 'astro:content';
+import { ViewTransitions } from 'astro:transitions';
+
+// Get all release notes
+const releaseNotes = await getCollection('release-notes');
+
+// Group release notes by release (month)
+const groupedNotes = releaseNotes.reduce((acc, note) => {
+  const releaseMonth = note.data.release.substring(0, 7); // Get YYYY-MM part
+  if (!acc[releaseMonth]) {
+    acc[releaseMonth] = [];
+  }
+  acc[releaseMonth].push(note);
+  return acc;
+}, {});
+
+// Sort releases in descending order (newest first)
+const sortedReleases = Object.keys(groupedNotes).sort().reverse();
+
+// Helper function to get icon for note type
+function getTypeIcon(type) {
+  const icons = {
+    enhancement: '📈',
+    feature: '🚀',
+    deprecation: '⚠️',
+    breaking: '💥',
+    docs: '📝',
+  };
+  return icons[type] || '📋';
+}
+
+// Helper function to format release date
+function formatReleaseDate(release) {
+  const date = new Date(release + '-01');
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long' 
+  });
+}
+
+// Helper function to get scope label
+function getScopeLabel(scope) {
+  const labels = {
+    'connector-api': 'Connector API',
+    'pos-api': 'POS API',
+    'be-api': 'Booking Engine API',
+    'chm-api': 'Channel Manager API',
+    'general': 'General',
+  };
+  return labels[scope] || scope;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Release Notes - Mews Open API</title>
+    <meta name="description" content="API release notes and changelog" />
+    <ViewTransitions />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Release Notes</h1>
+        <p>API release notes and changelog</p>
+      </header>
+
+      <main class="release-notes-container">
+        {sortedReleases.map((release) => (
+          <div class="release-section">
+            <h2>{formatReleaseDate(release)}</h2>
+            <ul class="release-notes-list">
+              {groupedNotes[release]
+                .sort((a, b) => new Date(b.data.release) - new Date(a.data.release))
+                .map((note) => (
+                <li class="release-note-item">
+                  <span class="note-icon">{getTypeIcon(note.data.type)}</span>
+                  <div class="note-content">
+                    <a href={`/release-notes/${note.slug}`} class="note-title">
+                      {note.data.title}
+                    </a>
+                    <div class="note-meta">
+                      <span class="note-type">{note.data.type}</span>
+                      <span class="note-scope">{getScopeLabel(note.data.scope)}</span>
+                      {note.data.operation && (
+                        <span class="note-operation">{note.data.operation}</span>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </main>
+    </div>
+
+    <style>
+      :root {
+        --sl-color-accent: #3b82f6;
+        --sl-color-accent-low: #dbeafe;
+        --sl-color-blue-accent: #1d4ed8;
+        --sl-color-white: #ffffff;
+        --sl-color-gray-1: #f8fafc;
+        --sl-color-gray-5: #64748b;
+        --sl-color-text: #1e293b;
+        --sl-color-border: #e2e8f0;
+        --sl-color-border-accent: #f1f5f9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--sl-color-text);
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      header {
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+        color: var(--sl-color-text);
+      }
+
+      header p {
+        font-size: 1.125rem;
+        color: #64748b;
+        margin: 0;
+      }
+
+      .release-notes-container {
+        max-width: 100%;
+      }
+
+      .release-section {
+        margin-bottom: 2rem;
+      }
+
+      .release-section h2 {
+        color: var(--sl-color-text);
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--sl-color-border);
+        padding-bottom: 0.5rem;
+      }
+
+      .release-notes-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .release-note-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--sl-color-border-accent);
+      }
+
+      .release-note-item:last-child {
+        border-bottom: none;
+      }
+
+      .note-icon {
+        font-size: 1.25rem;
+        flex-shrink: 0;
+        margin-top: 0.125rem;
+      }
+
+      .note-content {
+        flex: 1;
+      }
+
+      .note-title {
+        display: block;
+        color: var(--sl-color-accent);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+
+      .note-title:hover {
+        text-decoration: underline;
+      }
+
+      .note-meta {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .note-type,
+      .note-scope,
+      .note-operation {
+        font-size: 0.75rem;
+        padding: 0.125rem 0.5rem;
+        border-radius: 0.25rem;
+        background: var(--sl-color-accent-low);
+        color: var(--sl-color-accent);
+      }
+
+      .note-scope {
+        background: var(--sl-color-blue-accent);
+        color: var(--sl-color-white);
+      }
+
+      .note-operation {
+        background: var(--sl-color-gray-5);
+        color: var(--sl-color-gray-1);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        header h1 {
+          font-size: 2rem;
+        }
+
+        .note-meta {
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+      }
+    </style>
+  </body>
+</html> 

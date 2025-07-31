@@ -1,0 +1,288 @@
+---
+import { getCollection } from 'astro:content';
+import { ViewTransitions } from 'astro:transitions';
+
+export async function getStaticPaths() {
+  const releaseNotes = await getCollection('release-notes');
+  return releaseNotes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+
+// Helper function to get icon for note type
+function getTypeIcon(type) {
+  const icons = {
+    enhancement: '📈',
+    feature: '🚀',
+    deprecation: '⚠️',
+    breaking: '💥',
+    docs: '📝',
+  };
+  return icons[type] || '📋';
+}
+
+// Helper function to format release date
+function formatReleaseDate(release) {
+  const date = new Date(release + '-01');
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long',
+    day: release.includes('-') && release.split('-').length > 2 ? 'numeric' : undefined
+  });
+}
+
+// Helper function to get scope label
+function getScopeLabel(scope) {
+  const labels = {
+    'connector-api': 'Connector API',
+    'pos-api': 'POS API',
+    'be-api': 'Booking Engine API',
+    'chm-api': 'Channel Manager API',
+    'general': 'General',
+  };
+  return labels[scope] || scope;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{note.data.title} - Release Notes - Mews Open API</title>
+    <meta name="description" content={note.data.title} />
+    <ViewTransitions />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav class="breadcrumb">
+          <a href="/release-notes">← Back to Release Notes</a>
+        </nav>
+      </header>
+
+      <main class="release-note">
+        <div class="note-header">
+          <div class="note-meta">
+            <span class="note-icon">{getTypeIcon(note.data.type)}</span>
+            <div class="note-info">
+              <h1>{note.data.title}</h1>
+              <div class="note-tags">
+                <span class="note-type">{note.data.type}</span>
+                <span class="note-scope">{getScopeLabel(note.data.scope)}</span>
+                <span class="note-release">{formatReleaseDate(note.data.release)}</span>
+                {note.data.operation && (
+                  <span class="note-operation">{note.data.operation}</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-content">
+          <Content />
+        </div>
+      </main>
+    </div>
+
+    <style>
+      :root {
+        --sl-color-accent: #3b82f6;
+        --sl-color-accent-low: #dbeafe;
+        --sl-color-blue-accent: #1d4ed8;
+        --sl-color-white: #ffffff;
+        --sl-color-gray-1: #f8fafc;
+        --sl-color-gray-5: #64748b;
+        --sl-color-text: #1e293b;
+        --sl-color-border: #e2e8f0;
+        --sl-color-border-accent: #f1f5f9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--sl-color-text);
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .breadcrumb {
+        margin-bottom: 2rem;
+      }
+
+      .breadcrumb a {
+        color: var(--sl-color-accent);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      .note-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--sl-color-border);
+      }
+
+      .note-meta {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .note-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+      }
+
+      .note-info {
+        flex: 1;
+      }
+
+      .note-info h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        color: var(--sl-color-text);
+      }
+
+      .note-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .note-type,
+      .note-scope,
+      .note-release,
+      .note-operation {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-weight: 500;
+      }
+
+      .note-type {
+        background: var(--sl-color-accent-low);
+        color: var(--sl-color-accent);
+      }
+
+      .note-scope {
+        background: var(--sl-color-blue-accent);
+        color: var(--sl-color-white);
+      }
+
+      .note-release {
+        background: var(--sl-color-gray-5);
+        color: var(--sl-color-white);
+      }
+
+      .note-operation {
+        background: var(--sl-color-gray-1);
+        color: var(--sl-color-gray-5);
+        border: 1px solid var(--sl-color-border);
+      }
+
+      .note-content {
+        font-size: 1.125rem;
+        line-height: 1.7;
+      }
+
+      .note-content h1,
+      .note-content h2,
+      .note-content h3,
+      .note-content h4,
+      .note-content h5,
+      .note-content h6 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: var(--sl-color-text);
+      }
+
+      .note-content h1 { font-size: 1.875rem; }
+      .note-content h2 { font-size: 1.5rem; }
+      .note-content h3 { font-size: 1.25rem; }
+      .note-content h4 { font-size: 1.125rem; }
+
+      .note-content p {
+        margin-bottom: 1rem;
+      }
+
+      .note-content ul,
+      .note-content ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+      }
+
+      .note-content li {
+        margin-bottom: 0.5rem;
+      }
+
+      .note-content code {
+        background: var(--sl-color-gray-1);
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 0.875em;
+      }
+
+      .note-content pre {
+        background: var(--sl-color-gray-1);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      .note-content pre code {
+        background: none;
+        padding: 0;
+      }
+
+      .note-content blockquote {
+        border-left: 4px solid var(--sl-color-accent);
+        padding-left: 1rem;
+        margin: 1rem 0;
+        font-style: italic;
+        color: #64748b;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        .note-meta {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .note-info h1 {
+          font-size: 1.5rem;
+        }
+
+        .note-tags {
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+      }
+    </style>
+  </body>
+</html> 

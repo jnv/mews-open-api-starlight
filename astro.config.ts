@@ -133,6 +133,10 @@ export default defineConfig({
                     directory: 'connector-api/changelog',
                   },
                 },
+                {
+                  label: 'Release Notes',
+                  link: '/release-notes',
+                },
               ],
             },
           ],

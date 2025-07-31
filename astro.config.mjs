@@ -3,6 +3,9 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import markdoc from '@astrojs/markdoc';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
+import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
+
+const connectorAPIReferenceGroup = createOpenAPISidebarGroup();
 
 // https://astro.build/config
 export default defineConfig({
@@ -60,6 +63,7 @@ export default defineConfig({
                     directory: 'connector-api/use-cases',
                   },
                 },
+                connectorAPIReferenceGroup,
                 {
                   label: 'API Events',
                   collapsed: true,
@@ -93,11 +97,25 @@ export default defineConfig({
           ],
           {
             topics: {
-              'connector-api': ['connector-api', 'connector-api/**/*'],
+              'connector-api': [
+                '/connector-api',
+                '/connector-api/**/*',
+                '/connector-api/reference/**/*',
+              ],
               'open-api': ['/'],
             },
           }
         ),
+        starlightOpenAPI([
+          {
+            base: 'connector-api/reference',
+            schema: 'schemas/connector-api.openapi.yaml',
+            sidebar: {
+              label: 'Reference',
+              group: connectorAPIReferenceGroup,
+            },
+          },
+        ]),
       ],
     }),
   ],

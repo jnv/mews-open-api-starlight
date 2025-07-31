@@ -2,37 +2,40 @@
 title: 'Getting started'
 ---
 
-# Getting started
 
 This page walks you through the key steps to begin developing your integration with the **Mews Connector API**. Whether you're exploring the demo environment, preparing for certification, or validating your first request, this guide covers the tools, environments and concepts you'll need.
 
-> **Ready to try a test call?** Jump to [Step 2: Make your first API call](#step-2-make-your-first-api-call).
+{% aside type="tip" title="Ready to try a test call?" %}
+Jump to [Step 2: Make your first API call](#step-2-make-your-first-api-call).
+{% /aside %}
 
 ## What you’ll need
 
 Before making your first request, make sure you're familiar with the following:
 
-- **Authentication tokens**<br>
+- **Authentication tokens**\
   Every API request requires:
 
   - `ClientToken`: Identifies your application. Issued by Mews.
   - `AccessToken`: Identifies the enterprise or property you're connecting to. Issued by the property.
   - `Client`: A short string naming your application.
 
-- **Mews environments**<br>
+- **Mews environments**\
   Mews provides two environments:
 
   - [Demo environment](../guidelines/environments.md#demo-environment) – for development and testing.
     - Net pricing and Gross pricing variants simulate different tax regimes used by properties in different jurisdictions.
   - [Production environment](../guidelines/environments.md#production-environment) – used by live properties after certification.
 
-- **Mews Operations**<br>
+- **Mews Operations**\
   You can optionally log into the UI of Mews Operations (used by hotel staff) to understand how API data maps to the product.
 
-- **Demo credentials**<br>
+- **Demo credentials**\
   Mews provides shared tokens and login details for test properties. These are suitable for early development, but subject to [rate limits](../guidelines/requests.md#request-limits).
 
-> **Want to know more?** For full details, see [Authentication](../guidelines/authentication) and [Environments](../guidelines/environments).
+{% aside type="note" title="Want to know more?" %}
+For full details, see [Authentication](../guidelines/authentication) and [Environments](../guidelines/environments).
+{% /aside %}
 
 ## Step 1: Set up your environment
 
@@ -87,7 +90,9 @@ https://api.mews-demo.com/api/connector/v1/configuration/get
 }
 ```
 
-> **Requests and responses**: For more on request formatting and response codes, see [Requests](../guidelines/requests) and [Responses](../guidelines/responses) respectively.
+{% aside type="tip" title="Requests and responses" %}
+For more on request formatting and response codes, see [Requests](../guidelines/requests) and [Responses](../guidelines/responses) respectively.
+{% /aside %}
 
 ## Step 3: Learn the API essentials
 
@@ -110,7 +115,9 @@ https://api.mews-demo.com/api/connector/v1/configuration/get
 - Check the [response code](../guidelines/responses.md#response-codes) and [details](../guidelines/responses.md#error-response-details) to diagnose issues.
 - Always validate required fields and timezones in your request payloads.
 
-> **Best practices**: For additional tips on how to get the most out of your integration, see our [best practices](../guidelines/best-practices).
+{% aside type="tip" title="Best practices" %}
+For additional tips on how to get the most out of your integration, see our [best practices](../guidelines/best-practices).
+{% /aside %}
 
 ## Next steps
 

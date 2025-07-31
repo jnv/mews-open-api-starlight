@@ -34,6 +34,39 @@ export default defineConfig({
                   label: 'Overview',
                   link: '/',
                 },
+                {
+                  label: 'Getting started',
+                  link: '/open-api/getting-started/',
+                },
+                {
+                  label: 'Mews Marketplace',
+                  link: '/open-api/mews-marketplace/',
+                },
+                {
+                  label: 'Your journey with Mews',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'open-api/your-journey',
+                  },
+                },
+                {
+                  label: 'Staying up to date',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'open-api/staying-up-to-date',
+                  },
+                },
+                {
+                  label: 'The Mews APIs',
+                  link: '/open-api/the-mews-apis/',
+                },
+                {
+                  label: 'Use Cases',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'open-api/use-cases',
+                  },
+                },
               ],
             },
             {

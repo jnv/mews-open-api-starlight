@@ -111,7 +111,7 @@ export default defineConfig({
         starlightOpenAPI([
           {
             base: 'connector-api/reference',
-            schema: 'schemas/connector-api.openapi.yaml',
+            schema: 'public/schemas/connector-api.openapi.yaml',
             sidebar: {
               label: 'Reference',
               group: connectorAPIReferenceGroup,

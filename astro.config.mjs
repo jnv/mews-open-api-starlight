@@ -9,6 +9,8 @@ const connectorAPIReferenceGroup = createOpenAPISidebarGroup();
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://jnv.github.io',
+  base: '/mews-open-api-starlight/',
   integrations: [
     markdoc(),
     starlight({

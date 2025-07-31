@@ -149,6 +149,10 @@ export default defineConfig({
               ],
               'open-api': ['/'],
             },
+            exclude: [
+              '/release-notes',
+              '/release-notes/**/*',
+            ],
           }
         ),
         starlightOpenAPI([

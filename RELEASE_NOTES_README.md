@@ -4,7 +4,7 @@ This document explains how to use the new release notes system in the Mews Open 
 
 ## Overview
 
-The release notes system allows you to create individual release notes as markdown files that are automatically grouped by release month and displayed on a dedicated release notes page.
+The release notes system allows you to create individual release notes as markdown files that are automatically grouped by release month and displayed on a dedicated release notes page. The system uses Starlight's built-in components and design system for a consistent look and feel.
 
 ## File Structure
 
@@ -105,7 +105,7 @@ Release notes are automatically:
 1. **Grouped by release month** (newest first)
 2. **Displayed on the release notes index page** at `/release-notes`
 3. **Linked individually** with their own pages
-4. **Categorized with icons** based on type
+4. **Categorized with Starlight icons** based on type
 5. **Tagged with scope and operation** information
 
 ## Navigation
@@ -118,13 +118,25 @@ The release notes are accessible through:
 
 ## Icons
 
-Each release note type has a corresponding icon:
+Each release note type has a corresponding Starlight icon:
 
-- 📈 Enhancement
-- 🚀 Feature
-- ⚠️ Deprecation
-- 💥 Breaking
-- 📝 Docs
+- 📈 `arrow-up` - Enhancement
+- 🚀 `rocket` - Feature
+- ⚠️ `warning` - Deprecation
+- 💥 `alert-triangle` - Breaking
+- 📝 `file-text` - Docs
+
+The icons are automatically styled using Starlight's design system and will adapt to the current theme.
+
+## Starlight Integration
+
+The release notes system is built using Starlight's components:
+
+- **StarlightPage**: Provides consistent layout and styling
+- **Icon**: Uses Starlight's built-in icon set
+- **Design System**: Leverages Starlight's CSS variables and theming
+
+This ensures the release notes pages look and feel consistent with the rest of your documentation site.
 
 ## Adding New Release Notes
 
@@ -152,7 +164,7 @@ Release notes are processed during the Astro build process:
 
 1. Content is validated against the schema
 2. Notes are grouped by release month
-3. Static pages are generated
+3. Static pages are generated using Starlight components
 4. Navigation is updated
 
 ## Troubleshooting
@@ -171,4 +183,12 @@ If you see validation errors, check:
 - All required fields are present in frontmatter
 - Enum values match exactly (case-sensitive)
 - Date format is YYYY-MM or YYYY-MM-DD
-- File is saved with `.md` extension 
+- File is saved with `.md` extension
+
+### Starlight Integration Issues
+
+If you encounter issues with Starlight components:
+
+- Ensure you're using the latest version of Starlight
+- Check that the Icon component names are valid
+- Verify that the StarlightPage component is imported correctly 

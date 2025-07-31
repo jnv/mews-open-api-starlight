@@ -2,21 +2,7 @@
 title: 'Mews Payment Terminals'
 ---
 
-# Mews Payment Terminals
-
 This use case is for Mews customers and partners who want to access [Mews Payment Terminals](https://www.mews.com/en/products/terminals) to take payments from guests.
-
-## Contents
-
-- [Introduction](#introduction)
-- [Caution!](#caution)
-- [Taking payments](#taking-payments)
-- [POS workflow](#pos-workflow)
-- [Kiosk workflow](#kiosk-workflow)
-- [Fiscal reporting](#fiscal-reporting)
-- [Operational procedures](#operational-procedures)
-- [Testing](#testing)
-- [Help and support](#help-and-support)
 
 ## Introduction
 

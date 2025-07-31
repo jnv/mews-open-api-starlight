@@ -1,5 +1,5 @@
 ---
-title: "Your integration journey"
+title: 'Your integration journey'
 ---
 
 # Your integration journey
@@ -8,4 +8,4 @@ For a general overview and step-by-step guide to the integration process for all
 
 ## Contents
 
-* [Certification](certification.md)<br>Information about the process of certifying your integration and gaining access to the Mews Marketplace.
+- [Certification](certification)<br>Information about the process of certifying your integration and gaining access to the Mews Marketplace.

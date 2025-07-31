@@ -1,5 +1,5 @@
 ---
-title: "Requests"
+title: 'Requests'
 ---
 
 # Requests
@@ -10,15 +10,15 @@ The API accepts only `HTTP POST` requests with `Content-Type` set to `applicatio
 [PlatformAddress]/api/connector/v1/[Resource]/[Action]
 ```
 
-* **PlatformAddress** - Base address of the Mews Connector API, this depends on the environment \(e.g. test, demo, production\)
-* **Resource** - Resource or domain entity which is the target of the action, always pluralized \(e.g. bills, reservations\)
-* **Action** - Name of the action to be performed on the resource \(e.g. getAll, add, delete\)
+- **PlatformAddress** - Base address of the Mews Connector API, this depends on the environment \(e.g. test, demo, production\)
+- **Resource** - Resource or domain entity which is the target of the action, always pluralized \(e.g. bills, reservations\)
+- **Action** - Name of the action to be performed on the resource \(e.g. getAll, add, delete\)
 
 > **Exact address**: The operation address **must match the specified format exactly**. It is case-sensitive and must not include a trailing slash or any additional characters. If the address does not match the expected format, the server will return a `404 Not Found` error.
 
 ## Body
 
-All API operations require the inclusion of `ClientToken`, `AccessToken` and `Client` in the request. These parameters authenticate incoming requests. For more details, see [Authentication](authentication.md).
+All API operations require the inclusion of `ClientToken`, `AccessToken` and `Client` in the request. These parameters authenticate incoming requests. For more details, see [Authentication](authentication).
 Additionally, all API operations can optionally accept `LanguageCode` and `CultureCode`. These parameters enforce the language and culture of the operation, potentially affecting entity descriptions or error messages. Both values must be provided together; otherwise, default values will be used.
 
 ```javascript
@@ -27,23 +27,23 @@ Additionally, all API operations can optionally accept `LanguageCode` and `Cultu
     "AccessToken": "C66EF7B239D24632943D115EDE9CB810-EA00F8FD8294692C940F6B5A8F9453D",
     "Client": "Sample Client 1.0.0",
     "LanguageCode": null,
-    "CultureCode": null 
+    "CultureCode": null
 }
 ```
 
-| Property | Type | Contract | Description |
-| --- | --- | --- | --- |
-| `ClientToken` | string | required | Token identifying the client application. |
-| `AccessToken` | string | required | Access token of the client application. |
-| `Client` | string | required | Name and version of the client application. |
+| Property       | Type   | Contract | Description                                                  |
+| -------------- | ------ | -------- | ------------------------------------------------------------ |
+| `ClientToken`  | string | required | Token identifying the client application.                    |
+| `AccessToken`  | string | required | Access token of the client application.                      |
+| `Client`       | string | required | Name and version of the client application.                  |
 | `LanguageCode` | string | optional | Code of the [language](../operations/languages.md#language). |
-| `CultureCode` | string | optional | Code of the culture. |
+| `CultureCode`  | string | optional | Code of the culture.                                         |
 
 ## Request limits
 
 Mews implements API request limits in order to protect our systems against an excessive volume of calls which could compromise the service for all its users.
-The limits are dependent on circumstances and on the environment - see [Environments](environments.md) for details of specific request limits.
-Regardless, your system should be prepared to receive a `429 Too Many Requests` response in cases where you hit such a limit - see [Responses](responses.md).
+The limits are dependent on circumstances and on the environment - see [Environments](environments) for details of specific request limits.
+Regardless, your system should be prepared to receive a `429 Too Many Requests` response in cases where you hit such a limit - see [Responses](responses).
 
 If you receive this error response, your system can re-try after an interval time, however some care is needed in choosing the interval time.
 In case of a 429 error, we include the `Retry-After` HTTP header in the response to indicate how long you should wait before making a re-try attempt.
@@ -80,5 +80,5 @@ Prefer: return=minimal
 
 When the header is present, the API will return `204 No Content` for the following endpoints:
 
-- All endpoints which support [pagination](pagination.md) and where the request results in an empty page.
+- All endpoints which support [pagination](pagination) and where the request results in an empty page.
 - All endpoints which normally return an empty JSON object in case of success, e.g. [Delete account notes](../operations/accountnotes.md#delete-account-notes).

@@ -1,5 +1,5 @@
 ---
-title: "Migration Guide: Get all reservations"
+title: 'Migration Guide: Get all reservations'
 ---
 
 # Migration Guide: Get all reservations
@@ -10,8 +10,8 @@ This guide is intended to assist API users to migrate away from the obsolete API
 >
 > We’re committed to ensuring a smooth transition from the old 2017 version of 'Get all reservations' to the newer 2023 version. To better support you, we’d love to hear about your migration plans and any potential blockers you may be facing.
 >
-> * **Migration timeline** – When do you plan to complete your migration?
-> * **Feature parity** – Is there any missing functionality preventing your transition?
+> - **Migration timeline** – When do you plan to complete your migration?
+> - **Feature parity** – Is there any missing functionality preventing your transition?
 >
 > After consulting the details in this Migration Guide, please take a moment to fill out this [short survey](https://mews.typeform.com/to/izhRLSFg) and share your feedback. If you need further assistance or would like to discuss your migration plans, please contact our Technical Partnerships team at <partnersuccess@mews.com>.
 
@@ -31,9 +31,9 @@ API Operation [Get all reservations (ver 2017-04-12)] is replaced by [Get all re
 The major differences are as follows:
 
 - The new operation doesn't support extents
-- The new operation requires [pagination](../guidelines/pagination.md)
+- The new operation requires [pagination](../guidelines/pagination)
 - The new operation supports filtering by more time intervals
-- The new operation supports [Portfolio Access Tokens](../concepts/multi-property.md)
+- The new operation supports [Portfolio Access Tokens](../concepts/multi-property)
 
 ### What do these changes mean for you?
 
@@ -42,7 +42,7 @@ The major differences are as follows:
 - Filtering by time intervals offers new opportunities to make your calls more efficient.
 - Portfolio Access Tokens again offers new opportunities to users taking advantage of the Mews Multi-Property feature.
 
-> **Extents**: Extents are a way to fetch related entities with a single API request. For example, when fetching reservations in the original Get all reservations operation, you were able to receive data about related customers and resources in the same resources. While this simplified some use cases, it frequently resulted in request timeouts and overfetching of rarely updated data. Furthermore, contract changes in related entities complicated tracking changes to the operation. See also [Best practices](../guidelines/best-practices.md).
+> **Extents**: Extents are a way to fetch related entities with a single API request. For example, when fetching reservations in the original Get all reservations operation, you were able to receive data about related customers and resources in the same resources. While this simplified some use cases, it frequently resulted in request timeouts and overfetching of rarely updated data. Furthermore, contract changes in related entities complicated tracking changes to the operation. See also [Best practices](../guidelines/best-practices).
 
 ## Migration steps
 
@@ -55,23 +55,23 @@ The major differences are as follows:
 
 The following table maps request parameters from [Get all reservations (ver 2017-04-12)] to the equivalent request parameters in [Get all reservations (ver 2023-06-06)].
 
-| Original property | New property | Notes |
-| :-- | :-- | :-- |
-| `ServiceIds` | `ServiceIds` | No longer `required`. |
-| `GroupIds` | `ReservationGroupIds` | - |
-| `ReservationIds` | `ReservationIds` | No change. |
-| `CustomerIds` | `AccountIds` | Accounts are more general than Customers and include Companies as well. |
-| `AssignedResourceIds` | `AssignedResourceIds` | No change. |
-| `RateIds` | n/a | Currently not supported. |
-| `BusinessSegmentIds` | n/a | Currently not supported. |
-| `ChannelNumbers` | `ChannelNumbers` | Reduced to maximum of 100 items. |
-| `Numbers` | `Numbers` | No change. |
-| `StartUtc` | See [Time filters] | - |
-| `EndUtc` | See [Time filters] | - |
-| `TimeFilter` | See [Time filters] | - |
-| `Currency` | n/a | Currently not supported. |
-| `States` | `States` | Uses [Service order state] instead of [Service order state (ver 2017-04-12)]: `Enquired` has been renamed to `Inquired`. |
-| `Limitation` | `Limitation` | Required for all requests. |
+| Original property     | New property          | Notes                                                                                                                    |
+| :-------------------- | :-------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `ServiceIds`          | `ServiceIds`          | No longer `required`.                                                                                                    |
+| `GroupIds`            | `ReservationGroupIds` | -                                                                                                                        |
+| `ReservationIds`      | `ReservationIds`      | No change.                                                                                                               |
+| `CustomerIds`         | `AccountIds`          | Accounts are more general than Customers and include Companies as well.                                                  |
+| `AssignedResourceIds` | `AssignedResourceIds` | No change.                                                                                                               |
+| `RateIds`             | n/a                   | Currently not supported.                                                                                                 |
+| `BusinessSegmentIds`  | n/a                   | Currently not supported.                                                                                                 |
+| `ChannelNumbers`      | `ChannelNumbers`      | Reduced to maximum of 100 items.                                                                                         |
+| `Numbers`             | `Numbers`             | No change.                                                                                                               |
+| `StartUtc`            | See [Time filters]    | -                                                                                                                        |
+| `EndUtc`              | See [Time filters]    | -                                                                                                                        |
+| `TimeFilter`          | See [Time filters]    | -                                                                                                                        |
+| `Currency`            | n/a                   | Currently not supported.                                                                                                 |
+| `States`              | `States`              | Uses [Service order state] instead of [Service order state (ver 2017-04-12)]: `Enquired` has been renamed to `Inquired`. |
+| `Limitation`          | `Limitation`          | Required for all requests.                                                                                               |
 
 ## Time filters
 
@@ -115,15 +115,15 @@ Migrated request to [Get all reservations (ver 2023-06-06)]:
 
 The following table maps the original `TimeFilter` value to the equivalent properties for [Get all reservations (ver 2023-06-06)]:
 
-| `TimeFilter` value | Request property | Notes |
-| :-- | :-- | :-- |
-| `Colliding` | `CollidingUtc` | - |
-| `Created` | `CreatedUtc` | - |
-| `Updated` | `UpdatedUtc` | - |
-| `Start` | `ScheduledStartUtc` | Clarified behavior of filtering by the scheduled time of reservation. |
-| `End` | `ScheduledEndUtc` | - |
-| `Overlapping` | n/a | Dropped due to low usage, use `CollidingUtc` instead. |
-| `Canceled` | n/a | Dropped due to low usage. Can be emulated with the combination of `UpdatedUtc` and `States` set to `[“Canceled"]` filters. |
+| `TimeFilter` value | Request property    | Notes                                                                                                                      |
+| :----------------- | :------------------ | :------------------------------------------------------------------------------------------------------------------------- |
+| `Colliding`        | `CollidingUtc`      | -                                                                                                                          |
+| `Created`          | `CreatedUtc`        | -                                                                                                                          |
+| `Updated`          | `UpdatedUtc`        | -                                                                                                                          |
+| `Start`            | `ScheduledStartUtc` | Clarified behavior of filtering by the scheduled time of reservation.                                                      |
+| `End`              | `ScheduledEndUtc`   | -                                                                                                                          |
+| `Overlapping`      | n/a                 | Dropped due to low usage, use `CollidingUtc` instead.                                                                      |
+| `Canceled`         | n/a                 | Dropped due to low usage. Can be emulated with the combination of `UpdatedUtc` and `States` set to `[“Canceled"]` filters. |
 
 ## Extents removal
 
@@ -149,7 +149,7 @@ The following example request to [Get all reservations (ver 2017-04-12)] uses ex
     "Reservations": true,
     "Customers": true,
     "Resources": true
-  },
+  }
 }
 ```
 
@@ -187,14 +187,14 @@ Returns the following response with two reservations:
       "Id": "0f515589-99b4-423d-b83a-b237009f0509",
       "AccountId": "fadd5bb6-b428-45d5-94f8-fd0d89fece6d",
       "AccountType": "Customer",
-      "AssignedResourceId": "20e00c32-d561-4008-8609-82d8aa525714",
+      "AssignedResourceId": "20e00c32-d561-4008-8609-82d8aa525714"
       // other properties removed for clarity
     },
     {
       "Id": "bdf1138f-6d47-4f30-9d5a-02c65344f396",
       "AccountId": "06ab4938-9675-4f3b-a198-012ed8abc1a6",
       "AccountType": "Customer",
-      "AssignedResourceId": "ed705d9e-ec6d-4ba7-9ffb-a25de7fbfb52",
+      "AssignedResourceId": "ed705d9e-ec6d-4ba7-9ffb-a25de7fbfb52"
       // other properties removed for clarity
     }
   ],
@@ -213,9 +213,7 @@ Second request to [Get all customers](../operations/customers.md#get-all-custome
   "ClientToken": "E0D439EE522F44368DC78E1BFB03710C-D24FB11DBE31D4621C4817E028D9E1D",
   "AccessToken": "C66EF7B239D24632943D115EDE9CB810-EA00F8FD8294692C940F6B5A8F9453D",
   "Client": "Sample Client 1.0.0",
-  "CustomerIds": [
-    "fadd5bb6-b428-45d5-94f8-fd0d89fece6d"
-  ],
+  "CustomerIds": ["fadd5bb6-b428-45d5-94f8-fd0d89fece6d"],
   "Limitation": { "Count": 10 }
 }
 ```
@@ -228,14 +226,14 @@ Third request to [Get all resources](../operations/resources.md#get-all-resource
 
 ```json
 {
-    "ClientToken": "E0D439EE522F44368DC78E1BFB03710C-D24FB11DBE31D4621C4817E028D9E1D",
-    "AccessToken": "C66EF7B239D24632943D115EDE9CB810-EA00F8FD8294692C940F6B5A8F9453D",
-    "Client": "Sample Client 1.0.0",
-    "ResourceIds": [
-        "20e00c32-d561-4008-8609-82d8aa525714",
-        "ed705d9e-ec6d-4ba7-9ffb-a25de7fbfb52"
-    ],
-    "Limitation": { "Count": 10 }
+  "ClientToken": "E0D439EE522F44368DC78E1BFB03710C-D24FB11DBE31D4621C4817E028D9E1D",
+  "AccessToken": "C66EF7B239D24632943D115EDE9CB810-EA00F8FD8294692C940F6B5A8F9453D",
+  "Client": "Sample Client 1.0.0",
+  "ResourceIds": [
+    "20e00c32-d561-4008-8609-82d8aa525714",
+    "ed705d9e-ec6d-4ba7-9ffb-a25de7fbfb52"
+  ],
+  "Limitation": { "Count": 10 }
 }
 ```
 
@@ -243,52 +241,52 @@ Third request to [Get all resources](../operations/resources.md#get-all-resource
 
 The following table links individual extents together with their replacement API Operations.
 
-| Extent | API operation | Notes |
-| :-- | :-- | :-- |
-| `Reservations` | n/a | Operation always returns reservations. |
-| `ReservationGroups` | [Get all reservation groups] | Use `GroupId` response property in `ReservationGroupIds` request parameter. |
-| `Customers` | [Get all customers] | Use `AccountId` response property where `AccountType` is "Customer". |
-| `CustomerAdresses` (sic) | [Get all addresses] | Use `AccountId` response property where in `AccountIds` parameter. |
-| `CustomerIdentityDocuments` | [Get all identity documents] | Use `AccountId` response property where `AccountType` is "Customer" |
-| `Services` | [Get all services] | Use `ServiceId` response property. |
-| `Products` | [Get all products] | Use `ServiceId` response property. |
-| `BusinessSegments` | [Get all business segments] | Use `BusinessSegmentId` response property. |
-| `Resources` | [Get all resources] | Use `AssignedResourceIds` response property. |
-| `ResourceCategories` | [Get all resource categories] | Use `RequestedResourceCategoryId` response property. |
-| `ResourceCategoryAssignments` | [Get all resource category assignments] | Use `AssignedResourceIds` property in `ResourceIds` request parameter. |
-| `Rates` | [Get all rates] | Use `RateId` response property. |
-| `Items` | [Get all payments]<br>[Get all order items] | Payments: Use `Id` response property in `ReservationIds` request parameter.<br>Order items: Use `Id` response property in `ServiceOrderIds` request parameter. |
-| `OrderItems` | [Get all order items] | Use `Id` response property in `ServiceOrderIds` request parameter. |
-| `Notes` | [Get all service order notes] | Use `Id` response property in `ServiceOrderIds` request parameter. |
-| `QrCodeData` | n/a | Use `QrCodeData` response property. |
-| `Companies` | [Get all companies] | Use `AccountId` response property where `AccountType` is `"Company"`. |
-| `AccountingStates` | [Get all payments]<br>[Get all order items] | Use `AccountingStates` request parameter for both operations. |
+| Extent                        | API operation                               | Notes                                                                                                                                                          |
+| :---------------------------- | :------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Reservations`                | n/a                                         | Operation always returns reservations.                                                                                                                         |
+| `ReservationGroups`           | [Get all reservation groups]                | Use `GroupId` response property in `ReservationGroupIds` request parameter.                                                                                    |
+| `Customers`                   | [Get all customers]                         | Use `AccountId` response property where `AccountType` is "Customer".                                                                                           |
+| `CustomerAdresses` (sic)      | [Get all addresses]                         | Use `AccountId` response property where in `AccountIds` parameter.                                                                                             |
+| `CustomerIdentityDocuments`   | [Get all identity documents]                | Use `AccountId` response property where `AccountType` is "Customer"                                                                                            |
+| `Services`                    | [Get all services]                          | Use `ServiceId` response property.                                                                                                                             |
+| `Products`                    | [Get all products]                          | Use `ServiceId` response property.                                                                                                                             |
+| `BusinessSegments`            | [Get all business segments]                 | Use `BusinessSegmentId` response property.                                                                                                                     |
+| `Resources`                   | [Get all resources]                         | Use `AssignedResourceIds` response property.                                                                                                                   |
+| `ResourceCategories`          | [Get all resource categories]               | Use `RequestedResourceCategoryId` response property.                                                                                                           |
+| `ResourceCategoryAssignments` | [Get all resource category assignments]     | Use `AssignedResourceIds` property in `ResourceIds` request parameter.                                                                                         |
+| `Rates`                       | [Get all rates]                             | Use `RateId` response property.                                                                                                                                |
+| `Items`                       | [Get all payments]<br>[Get all order items] | Payments: Use `Id` response property in `ReservationIds` request parameter.<br>Order items: Use `Id` response property in `ServiceOrderIds` request parameter. |
+| `OrderItems`                  | [Get all order items]                       | Use `Id` response property in `ServiceOrderIds` request parameter.                                                                                             |
+| `Notes`                       | [Get all service order notes]               | Use `Id` response property in `ServiceOrderIds` request parameter.                                                                                             |
+| `QrCodeData`                  | n/a                                         | Use `QrCodeData` response property.                                                                                                                            |
+| `Companies`                   | [Get all companies]                         | Use `AccountId` response property where `AccountType` is `"Company"`.                                                                                          |
+| `AccountingStates`            | [Get all payments]<br>[Get all order items] | Use `AccountingStates` request parameter for both operations.                                                                                                  |
 
 ## Response properties
 
 The following table maps the response properties from the original [Reservation (ver 2017-04-12)] entity to the properties of [Reservation (ver 2023-06-06)]. Only the changed properties are listed.
 
-| Original property | New property | Notes |
-| :-- | :-- | :-- |
-| `ChannelManagerGroupNumber` | n/a | No longer supported. |
-| `ChannelManager` | n/a | Replaced by [Get reservations channel manager details](../operations/reservations.md#get-reservation-channel-manager-details). |
-| `State` | `State` | Uses [Service order state] instead of [Service order state (ver 2017-04-12)]: `Enquired` has been renamed to `Inquired`. |
-| `Origin` | `Origin` | Operations-specific values moved to `CommanderOrigin` (see [Commander origin]). |
-| `Purpose` | `Purpose` | No longer required. |
-| `StartUtc` | `ScheduledStartUtc`<br>`ActualStartUtc` | Early check-ins changed `StartUtc` value. Check-in time and scheduled start time are now provided in separate properties. |
-| `EndUtc` | `ScheduledEndUtc`<br>`ActualEndUtc` | Check-outs changed EndUtc value. Check-out time and scheduled end time are now provided in separate properties. |
-| `RequestedCategoryId` | `RequestedResourceCategoryId` | - |
-| `CompanyId` | `PartnerCompanyId` | - |
-| `CancellationReason` | `CancellationReason` | Optional, previously incorrectly marked as required. |
-| `OwnerId` | `AccountId` | - |
-| `Options` | `Options` | Uses Service order options. |
-| `AssignedSpaceId` | `AssignedResourceId` | Previously deprecated. |
-| `AssignedSpaceLocked` | `AssignedResourceLocked` | Previously deprecated. |
-| `AdultCount` | `PersonCounts` | Previously deprecated. |
-| `ChildCount` | `PersonCounts` | Previously deprecated. |
-| `CustomerId` | `AccountId` | Previously deprecated. |
-| `CompanionIds` | n/a | Previously deprecated, replaced by [Get all companions](../operations/companies.md#get-all-companies). |
-| `ChannelManagerId` | `ChannelManagerNumber` | Previously deprecated. |
+| Original property           | New property                            | Notes                                                                                                                          |
+| :-------------------------- | :-------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| `ChannelManagerGroupNumber` | n/a                                     | No longer supported.                                                                                                           |
+| `ChannelManager`            | n/a                                     | Replaced by [Get reservations channel manager details](../operations/reservations.md#get-reservation-channel-manager-details). |
+| `State`                     | `State`                                 | Uses [Service order state] instead of [Service order state (ver 2017-04-12)]: `Enquired` has been renamed to `Inquired`.       |
+| `Origin`                    | `Origin`                                | Operations-specific values moved to `CommanderOrigin` (see [Commander origin]).                                                |
+| `Purpose`                   | `Purpose`                               | No longer required.                                                                                                            |
+| `StartUtc`                  | `ScheduledStartUtc`<br>`ActualStartUtc` | Early check-ins changed `StartUtc` value. Check-in time and scheduled start time are now provided in separate properties.      |
+| `EndUtc`                    | `ScheduledEndUtc`<br>`ActualEndUtc`     | Check-outs changed EndUtc value. Check-out time and scheduled end time are now provided in separate properties.                |
+| `RequestedCategoryId`       | `RequestedResourceCategoryId`           | -                                                                                                                              |
+| `CompanyId`                 | `PartnerCompanyId`                      | -                                                                                                                              |
+| `CancellationReason`        | `CancellationReason`                    | Optional, previously incorrectly marked as required.                                                                           |
+| `OwnerId`                   | `AccountId`                             | -                                                                                                                              |
+| `Options`                   | `Options`                               | Uses Service order options.                                                                                                    |
+| `AssignedSpaceId`           | `AssignedResourceId`                    | Previously deprecated.                                                                                                         |
+| `AssignedSpaceLocked`       | `AssignedResourceLocked`                | Previously deprecated.                                                                                                         |
+| `AdultCount`                | `PersonCounts`                          | Previously deprecated.                                                                                                         |
+| `ChildCount`                | `PersonCounts`                          | Previously deprecated.                                                                                                         |
+| `CustomerId`                | `AccountId`                             | Previously deprecated.                                                                                                         |
+| `CompanionIds`              | n/a                                     | Previously deprecated, replaced by [Get all companions](../operations/companies.md#get-all-companies).                         |
+| `ChannelManagerId`          | `ChannelManagerNumber`                  | Previously deprecated.                                                                                                         |
 
 ## Known issues
 

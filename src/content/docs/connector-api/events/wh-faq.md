@@ -55,25 +55,25 @@ If an event message fails to be delivered (either HTTP error code is received or
 
 ## When should I use Webhooks?
 
-See [Ways to communicate](../events/communicate.md).
+See [Ways to communicate](../events/communicate).
 
 ## How are Webhooks different to WebSockets?
 
-See [Ways to communicate](../events/communicate.md).
+See [Ways to communicate](../events/communicate).
 
 ## What events can I create Webhooks for?
 
 See the Webhook reference pages for the list of currently supported events:
 
-- [General Webhooks](wh-general.md)
-- [Integration Webhooks](wh-integration.md)
+- [General Webhooks](wh-general)
+- [Integration Webhooks](wh-integration)
 
 ## What does an event message look like?
 
 See the Webhook reference pages for details of the request body:
 
-- [General Webhooks](wh-general.md)
-- [Integration Webhooks](wh-integration.md)
+- [General Webhooks](wh-general)
+- [Integration Webhooks](wh-integration)
 
 ## What is the frequency of event generation?
 
@@ -87,7 +87,7 @@ Webhooks are set up in the system administration, please contact [partnersuccess
 
 ## Can I set up multiple Webhooks?
 
-Only one endpoint URL for [General Webhooks](wh-general.md) and one endpoint URL for [Integration Webhooks](wh-integration.md) can be set up per integration client, i.e. per partner application.
+Only one endpoint URL for [General Webhooks](wh-general) and one endpoint URL for [Integration Webhooks](wh-integration) can be set up per integration client, i.e. per partner application.
 If you wish, you can use the same endpoint URL for both types of Webhook.
 
 ## Can I use Webhooks in an on-premise application?
@@ -101,11 +101,11 @@ Yes. Event messages are configured for each integration, please contact [partner
 
 ## Can you give me a specific use case for Webhooks?
 
-A specific use case for Webhooks is described in [Event management - Managing availability block inventory and pickup](../use-cases/events.md#managing-availability-block-inventory-and-pickup), but Webhooks are relevant to many use cases and are discussed in the relevant section - see [Use cases](../use-cases/README.md).
+A specific use case for Webhooks is described in [Event management - Managing availability block inventory and pickup](../use-cases/events.md#managing-availability-block-inventory-and-pickup), but Webhooks are relevant to many use cases and are discussed in the relevant section - see [Use cases](../use-cases/).
 
 ## Is there a limit on the number of events in one Webhook?
 
-[General Webhooks](wh-general.md) carry multiple events that have occurred at the same time.
+[General Webhooks](wh-general) carry multiple events that have occurred at the same time.
 Yes, there is an upper limit on the number of messages carried, before rolling over to a new message.
 This number is a system parameter, currently in the order of hundreds, but Mews reserves the right to adjust this value for performance reasons.
 

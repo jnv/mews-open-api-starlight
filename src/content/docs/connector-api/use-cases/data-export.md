@@ -1,5 +1,5 @@
 ---
-title: "Data export"
+title: 'Data export'
 ---
 
 # Data export
@@ -29,17 +29,17 @@ The _Data export_ feature of the **Mews Connector API** provides a streamlined m
 
 To initiate a bulk data export, use the [Add export](../operations/exports.md#add-export) operation, specifying the data _Entity type_, e.g. `OrderItem`. The operation returns an [Export](../operations/exports.md#export) object containing the Export `Id` to use in the next step. If there is already an export pending, the operation returns a 400 HTTP error code.
 
-| <div style="width:350px">'How to' use case</div> | API Operations |
-| :-- | :-- |
-| How to create a new bulk data export | [Add export](../operations/exports.md#add-export) |
+| <div style="width:350px">'How to' use case</div> | API Operations                                    |
+| :----------------------------------------------- | :------------------------------------------------ |
+| How to create a new bulk data export             | [Add export](../operations/exports.md#add-export) |
 
 ## Check export status
 
 To monitor the progress of the export and retrieve the exported data, use the [Get all exports](../operations/exports.md#get-all-exports) operation. This operation returns details of exports for the `ExportIds` you specify, including their status. You can repeatedly check the status of an export while its status is `Pending` or `Processing`, for example every 5 minutes.
 
-| <div style="width:350px">'How to' use case</div> | API Operations |
-| :-- | :-- |
-| How to check on data export progress | [Get all exports](../operations/exports.md#get-all-exports) |
+| <div style="width:350px">'How to' use case</div> | API Operations                                              |
+| :----------------------------------------------- | :---------------------------------------------------------- |
+| How to check on data export progress             | [Get all exports](../operations/exports.md#get-all-exports) |
 
 ## Download exported data
 
@@ -67,6 +67,7 @@ Once the export status changes to `Success`, you can download the exported data 
     ]
 }
 ```
+
 > **Multiple files:** Note the data export may consist of multiple files.
 
 ## Frequently Asked Questions
@@ -81,7 +82,7 @@ Export duration can vary enormously, but checking status every 5 minutes is a re
 
 ### Can I export data from multiple enterprises in one request?
 
-Yes, you can use a [Portfolio Access Token](../guidelines/multi-property.md) to request data from multiple enterprises. Doing so will generate an export of data for all enterprises within scope of the Access Token.
+Yes, you can use a [Portfolio Access Token](../guidelines/multi-property) to request data from multiple enterprises. Doing so will generate an export of data for all enterprises within scope of the Access Token.
 
 ### For how long are export files available to download?
 

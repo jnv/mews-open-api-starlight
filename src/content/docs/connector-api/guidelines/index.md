@@ -7,7 +7,7 @@ sidebar:
 
 # Usage guidelines
 
-This section provides important guidelines on how to use the **Mews Connector API**. For a deeper understanding of Mews concepts, see [Concepts](../concepts/README.md). For information about individual endpoints or operations, see [API Operations](../operations/README.md).
+This section provides important guidelines on how to use the **Mews Connector API**. For a deeper understanding of Mews concepts, see [Concepts](../concepts/). For information about individual endpoints or operations, see [API Operations](../operations/).
 
 > ### Terminology
 >
@@ -17,10 +17,10 @@ This section provides important guidelines on how to use the **Mews Connector AP
 
 ## Contents
 
-- [Authentication](authentication.md)<br>Details of how API Operation requests are authenticated.
-- [Requests](requests.md)<br>Details of how to make API Operation requests.
-- [Responses](responses.md)<br>Details of API Operation responses, including error messages.
-- [Environments](environments.md)<br>A description of the different environments available and how to access them, including test credentials, request limits and more.
-- [Serialization](serialization.md)<br>Various topics related to data formats.
-- [Pagination](pagination.md)<br>An explanation of the pagination feature and how to use it to fetch data.
-- [Best practices](best-practices.md)<br>Advice on best practices for using the API.
+- [Authentication](authentication)<br>Details of how API Operation requests are authenticated.
+- [Requests](requests)<br>Details of how to make API Operation requests.
+- [Responses](responses)<br>Details of API Operation responses, including error messages.
+- [Environments](environments)<br>A description of the different environments available and how to access them, including test credentials, request limits and more.
+- [Serialization](serialization)<br>Various topics related to data formats.
+- [Pagination](pagination)<br>An explanation of the pagination feature and how to use it to fetch data.
+- [Best practices](best-practices)<br>Advice on best practices for using the API.

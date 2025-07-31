@@ -1,5 +1,5 @@
 ---
-title: "Additional functions"
+title: 'Additional functions'
 ---
 
 # Additional functions
@@ -10,5 +10,5 @@ Below are some commonly requested functions, with suggestions on how to implemen
 If you'd like to see instructions for a function that is not included below, please submit a detailed request [via our feedback
 page](https://feedback.mews.com/forums/919087-marketplace-app-store-integrations?category_id=353524).
 
-* [Retrieve and apply correct VAT code](vat-codes.md)
-* [Manage restrictions](manage-restrictions.md)
+- [Retrieve and apply correct VAT code](vat-codes)
+- [Manage restrictions](manage-restrictions)

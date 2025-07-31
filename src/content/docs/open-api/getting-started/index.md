@@ -2,7 +2,6 @@
 title: "Getting started"
 ---
 
-
 The __Mews Open API__ is a powerful tool that enables you to easily connect your hospitality software into Mews and become part of our ecosystem of integrated solutions.
 Use the __Mews Open API__ to fetch data, make bookings, adjust rates, post charges, upsell products, and do a myriad of other things.
 

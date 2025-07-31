@@ -44,7 +44,9 @@ export function formatReleaseDate(release: string) {
 
 export function getReleaseNoteHref(note: ReleaseNote): string {
   const releaseMonth = getReleaseMonth(note.data.release);
-  return `/release-notes/${releaseMonth}/#${note.id}`;
+  return `${import.meta.env.BASE_URL}/release-notes/${releaseMonth}/#${
+    note.id
+  }`;
 }
 
 function getReleaseMonth(release: string): string {

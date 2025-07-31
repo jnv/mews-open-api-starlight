@@ -9,7 +9,7 @@ const connectorAPIReferenceGroup = createOpenAPISidebarGroup();
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jnv.github.io',
-  base: '/mews-open-api-starlight/',
+  base: '/mews-open-api-starlight',
   integrations: [
     markdoc(),
     starlight({
@@ -66,6 +66,10 @@ export default defineConfig({
                   autogenerate: {
                     directory: 'open-api/use-cases',
                   },
+                },
+                {
+                  label: 'Release Notes',
+                  link: '/release-notes',
                 },
               ],
             },
@@ -133,10 +137,6 @@ export default defineConfig({
                     directory: 'connector-api/changelog',
                   },
                 },
-                {
-                  label: 'Release Notes',
-                  link: '/release-notes',
-                },
               ],
             },
           ],
@@ -147,12 +147,8 @@ export default defineConfig({
                 '/connector-api/**/*',
                 '/connector-api/reference/**/*',
               ],
-              'open-api': ['/'],
+              'open-api': ['/', '/release-notes', '/release-notes/**/*'],
             },
-            exclude: [
-              '/release-notes',
-              '/release-notes/**/*',
-            ],
           }
         ),
         starlightOpenAPI([

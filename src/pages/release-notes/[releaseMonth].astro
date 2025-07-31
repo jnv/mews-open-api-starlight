@@ -1,0 +1,62 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import AnchorHeading from '@astrojs/starlight/components/AnchorHeading.astro';
+import { render } from 'astro:content';
+import { getReleaseNotes, formatReleaseDate } from '../../utils/releaseNotes';
+import type { MarkdownHeading } from 'astro';
+
+type StarlightPageType = typeof StarlightPage;
+
+export async function getStaticPaths() {
+  const releaseNotes = await getReleaseNotes();
+  return Object.values(releaseNotes).map((group) => {
+    console.log(`Generating path for release month: ${group.month}`);
+    return {
+      params: { releaseMonth: group.month },
+      props: {
+        releaseNotes: group.releaseNotes,
+      },
+    };
+  });
+}
+
+const { releaseMonth } = Astro.params;
+const { releaseNotes } = Astro.props;
+
+const headings: MarkdownHeading[] = [];
+const releaseNotesPromises = [];
+
+for (const element of releaseNotes) {
+  const id = element.id;
+  const { title } = element.data;
+  headings.push({
+    depth: 2,
+    slug: id,
+    text: title,
+  });
+  releaseNotesPromises.push(
+    render(element).then(({ Content }) => ({
+      id,
+      title,
+      Content,
+    }))
+  );
+}
+const releaseNotesContent = await Promise.all(releaseNotesPromises);
+const title = `Release notes for ${formatReleaseDate(releaseMonth)}`;
+---
+
+<StarlightPage frontmatter={{ title: title }} headings={headings}>
+  {
+    releaseNotesContent.map(async ({ id, title, Content }) => (
+      <article class="release-section">
+        <AnchorHeading level={2} id={id}>
+          {title}
+        </AnchorHeading>
+        <div class="release-note-content">
+          <Content />
+        </div>
+      </article>
+    ))
+  }
+</StarlightPage>

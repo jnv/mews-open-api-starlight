@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
-import { topicSchema } from 'starlight-sidebar-topics/schema'
+import { topicSchema } from 'starlight-sidebar-topics/schema';
 
 // Schema for release notes
 const releaseNotesSchema = z.object({
@@ -15,10 +16,10 @@ const releaseNotesSchema = z.object({
 export const collections = {
   docs: defineCollection({
     loader: docsLoader(),
-    schema: docsSchema({ extend: topicSchema })
+    schema: docsSchema({ extend: topicSchema }),
   }),
-  'release-notes': defineCollection({
-    type: 'content',
+  releaseNotes: defineCollection({
+    loader: glob({ base: './src/content/release-notes', pattern: '**/*.md' }),
     schema: releaseNotesSchema,
   }),
-}
+};

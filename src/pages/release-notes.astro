@@ -1,199 +1,36 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Icon } from "@astrojs/starlight/components";
-import { getCollection } from "astro:content";
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import ReleaseNoteLink from '../components/ReleaseNoteLink.astro';
+import { formatReleaseDate, getReleaseNotes } from '../utils/releaseNotes';
 
-// Get all release notes
-const releaseNotes = await getCollection("release-notes");
-
-// Group release notes by release (month)
-const groupedNotes = releaseNotes.reduce(
-  (acc: Record<string, typeof releaseNotes>, note) => {
-    const releaseMonth = note.data.release.substring(0, 7); // Get YYYY-MM part
-    if (!acc[releaseMonth]) {
-      acc[releaseMonth] = [];
-    }
-    acc[releaseMonth].push(note);
-    return acc;
-  },
-  {},
-);
-
-// Sort releases in descending order (newest first)
-const sortedReleases = Object.keys(groupedNotes).sort().reverse();
-
-// Helper function to get icon for note type
-function getTypeIcon(type: string) {
-  const icons: Record<string, string> = {
-    enhancement: "arrow-up",
-    feature: "rocket",
-    deprecation: "warning",
-    breaking: "alert-triangle",
-    docs: "file-text",
-  };
-  return icons[type] || "info";
-}
-
-// Helper function to format release date
-function formatReleaseDate(release: string) {
-  const date = new Date(release + "-01");
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-  });
-}
-
-// Helper function to get scope label
-function getScopeLabel(scope: string) {
-  const labels: Record<string, string> = {
-    "connector-api": "Connector API",
-    "pos-api": "POS API",
-    "be-api": "Booking Engine API",
-    "chm-api": "Channel Manager API",
-    general: "General",
-  };
-  return labels[scope] || scope;
-}
+const releaseNotes = await getReleaseNotes();
 ---
 
 <StarlightPage
   frontmatter={{
-    title: "Release Notes",
-    description: "API release notes and changelog",
+    title: 'Release Notes',
+    description: 'API release notes and changelog',
   }}
 >
-  <div class="release-notes-container">
-    {
-      sortedReleases.map((release) => (
-        <section class="release-section">
-          <h2>{formatReleaseDate(release)}</h2>
-          <ul class="release-notes-list">
-            {groupedNotes[release]
-              .sort(
-                (a, b) =>
-                  new Date(b.data.release).getTime() -
-                  new Date(a.data.release).getTime(),
-              )
-              .map((note) => (
-                <li class="release-note-item">
-                  <Icon
-                    name={getTypeIcon(note.data.type) as any}
-                    class="note-icon"
-                  />
-                  <div class="note-content">
-                    <a href={`/release-notes/${note.slug}`} class="note-title">
-                      {note.data.title}
-                    </a>
-                    <div class="note-meta">
-                      <span class="note-type">{note.data.type}</span>
-                      <span class="note-scope">
-                        {getScopeLabel(note.data.scope)}
-                      </span>
-                      {note.data.operation && (
-                        <span class="note-operation">
-                          {note.data.operation}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
-          </ul>
-        </section>
-      ))
-    }
-  </div>
-
-  <style>
-    .release-notes-container {
-      max-width: 100%;
-    }
-
-    .release-section {
-      margin-bottom: 2rem;
-    }
-
-    .release-section h2 {
-      color: var(--sl-color-text);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid var(--sl-color-border);
-      padding-bottom: 0.5rem;
-    }
-
-    .release-notes-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .release-note-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--sl-color-border-accent);
-    }
-
-    .release-note-item:last-child {
-      border-bottom: none;
-    }
-
-    .note-icon {
-      flex-shrink: 0;
-      margin-top: 0.125rem;
-      color: var(--sl-color-accent);
-    }
-
-    .note-content {
-      flex: 1;
-    }
-
-    .note-title {
-      display: block;
-      color: var(--sl-color-accent);
-      text-decoration: none;
-      font-weight: 500;
-      margin-bottom: 0.25rem;
-    }
-
-    .note-title:hover {
-      text-decoration: underline;
-    }
-
-    .note-meta {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .note-type,
-    .note-scope,
-    .note-operation {
-      font-size: 0.75rem;
-      padding: 0.125rem 0.5rem;
-      border-radius: 0.25rem;
-      background: var(--sl-color-accent-low);
-      color: var(--sl-color-accent);
-    }
-
-    .note-scope {
-      background: var(--sl-color-blue-accent);
-      color: var(--sl-color-white);
-    }
-
-    .note-operation {
-      background: var(--sl-color-gray-5);
-      color: var(--sl-color-gray-1);
-    }
-
-    @media (max-width: 768px) {
-      .note-meta {
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-    }
-  </style>
+  {
+    releaseNotes.map((release) => (
+      <section class="release-section">
+        <h2>{formatReleaseDate(release.month)}</h2>
+        <ul class="release-notes-list">
+          {release.releaseNotes.map((note) => (
+            <li class="release-note-item">
+              <ReleaseNoteLink releaseNote={note} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
 </StarlightPage>
 
+<style>
+  .release-notes-list {
+    list-style: none;
+    padding: 0;
+  }
+</style>

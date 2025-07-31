@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import {
+  getTypeIcon,
+  getScopeLabel,
+  getReleaseNoteHref,
+} from '../utils/releaseNotes.ts';
+import LinkCardWithIcon from './LinkCardWithIcon.astro';
+
+interface Props {
+  releaseNote: CollectionEntry<'releaseNotes'>;
+}
+
+const { releaseNote } = Astro.props;
+
+const description = getScopeLabel(releaseNote.data.scope);
+---
+
+<LinkCardWithIcon
+  href={getReleaseNoteHref(releaseNote)}
+  icon={getTypeIcon(releaseNote.data.type)}
+  title={releaseNote.data.title}
+  description={description}
+/>
+
+<!-- <div class="note-content">
+  <Icon name={getTypeIcon(releaseNote.data.type) as any} class="note-icon" />
+  <a href={`${releaseNote.id}`} class="note-title">
+    {releaseNote.data.title}
+  </a>
+  <div class="note-meta">
+    <Badge text={releaseNote.data.type} />
+    <Badge text={getScopeLabel(releaseNote.data.scope)} variant="tip" />
+    {releaseNote.data.operation && <Badge text={releaseNote.data.operation} />}
+  </div>
+</div> -->

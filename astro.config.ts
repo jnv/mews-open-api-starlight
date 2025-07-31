@@ -26,14 +26,21 @@ export default defineConfig({
           [
             {
               label: 'Mews Open API',
-              link: '/open-api/',
+              link: '/',
               id: 'open-api',
+              icon: 'open-book',
+              items: [
+                {
+                  label: 'Overview',
+                  link: '/',
+                },
+              ],
             },
             {
               label: 'Connector API',
               link: '/connector-api/',
               id: 'connector-api',
-              icon: 'open-book',
+              icon: 'puzzle',
               items: [
                 {
                   label: 'Overview',

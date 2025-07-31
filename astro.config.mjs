@@ -2,31 +2,103 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import markdoc from '@astrojs/markdoc';
+import starlightSidebarTopics from 'starlight-sidebar-topics';
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [
-		markdoc(),
-		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
-			sidebar: [
-				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
-				},
-				{
-					label: 'Connector API',
-					autogenerate: { directory: 'connector-api' },
-				},
-			],
-		}),
-	],
+  integrations: [
+    markdoc(),
+    starlight({
+      title: 'Mews Open API',
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/withastro/starlight',
+        },
+      ],
+      plugins: [
+        starlightSidebarTopics(
+          [
+            {
+              label: 'Mews Open API',
+              link: '/open-api/',
+              id: 'open-api',
+            },
+            {
+              label: 'Connector API',
+              link: '/connector-api/',
+              id: 'connector-api',
+              icon: 'open-book',
+              items: [
+                {
+                  label: 'Overview',
+                  link: '/connector-api/',
+                },
+                {
+                  label: 'Getting started',
+                  link: '/connector-api/getting-started/',
+                },
+                {
+                  label: 'Usage guidelines',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/guidelines',
+                  },
+                },
+                {
+                  label: 'Concepts',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/concepts',
+                  },
+                },
+                {
+                  label: 'Use cases',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/use-cases',
+                  },
+                },
+                {
+                  label: 'API Events',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/events',
+                  },
+                },
+                {
+                  label: 'Your integration journey',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/your-journey',
+                  },
+                },
+                {
+                  label: 'Deprecations',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/deprecations',
+                  },
+                },
+                {
+                  label: 'Changelog',
+                  collapsed: true,
+                  autogenerate: {
+                    directory: 'connector-api/changelog',
+                  },
+                },
+              ],
+            },
+          ],
+          {
+            topics: {
+              'connector-api': ['connector-api', 'connector-api/**/*'],
+              'open-api': ['/'],
+            },
+          }
+        ),
+      ],
+    }),
+  ],
 });
